@@ -270,6 +270,19 @@ class Chat extends Base {
     async changeLabels(labelIds) {
         return this.client.addOrRemoveLabels(labelIds, [this.id._serialized]);
     }
+
+    /**
+     * Export the history of this chat
+     * @returns {Promise<string>} Path of the file with the chat history
+     */
+    async exportChatHistory() {
+        const messages = await this.fetchMessages({ limit: Infinity });
+        const formattedHistory = this.client.util.formatChatHistory(messages);
+        const fs = require('fs');
+        const path = `${this.id._serialized}_history.txt`;
+        fs.writeFileSync(path, formattedHistory);
+        return path;
+    }
 }
 
 module.exports = Chat;
