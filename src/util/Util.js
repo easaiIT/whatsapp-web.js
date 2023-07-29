@@ -181,6 +181,15 @@ class Util {
     static setFfmpegPath(path) {
         ffmpeg.setFfmpegPath(path);
     }
+
+    /**
+     * Formats an array of messages into a user-friendly format
+     * @param {Array<Message>} messages
+     * @returns {string} Formatted chat history
+     */
+    static formatChatHistory(messages) {
+        return messages.map(message => JSON.stringify(message)).join('\n');
+    }
 }
 
 module.exports = Util;
